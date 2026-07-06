@@ -73,6 +73,10 @@ BEGIN
             'Booked'
         );
 
+        UPDATE kamar
+        SET status='Booked'
+        WHERE id_kamar=v_id_kamar;
+
         RETURN 'Booking Jakarta berhasil';
 
     END IF;
@@ -123,6 +127,10 @@ BEGIN
             'Booked'
         );
 
+        UPDATE kamar_surabaya
+        SET status='Booked'
+        WHERE id_kamar=v_id_kamar;
+
         RETURN 'Booking Surabaya berhasil';
 
     END IF;
@@ -172,6 +180,10 @@ BEGIN
             v_total,
             'Booked'
         );
+
+        UPDATE kamar_makassar
+        SET status='Booked'
+        WHERE id_kamar=v_id_kamar;
 
         RETURN 'Booking Makassar berhasil';
 

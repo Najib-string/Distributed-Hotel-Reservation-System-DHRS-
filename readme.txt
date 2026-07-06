@@ -1,4 +1,31 @@
--- 1. Data lokal Jakarta
+python -m streamlit run app.py
+
+docker exec -it pg-jakarta psql -U admin -d db_jakarta
+
+docker exec -it pg-surabaya psql -U admin -d db_surabaya
+
+docker exec -it pg-makassar psql -U admin -d db_makassar
+
+SELECT * FROM hotel_nasional;
+
+SELECT * FROM kamar_nasional;
+
+SELECT booking_kamar(
+2,
+'SBY02',
+'2026-10-05',
+'2026-10-07'
+);
+
+SELECT booking_kamar(
+3,
+'MKS01',
+'2026-10-10',
+'2026-10-12'
+);
+
+
+-- 1. Data lokal 
 SELECT * FROM hotel;
 
 -- 2. FDW Surabaya
