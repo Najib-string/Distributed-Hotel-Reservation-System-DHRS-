@@ -6,28 +6,75 @@ Seed Data Surabaya
 */
 
 -- Wilayah
-INSERT INTO wilayah VALUES
-(2,'Surabaya','SBY','172.20.0.20');
-
--- Hotel
-INSERT INTO hotel
-(id_wilayah,nama_hotel,alamat,kota,bintang,kontak_hotel)
+INSERT INTO wilayah
 VALUES
 (
+2,
+'Surabaya',
+'SBY',
+'172.20.0.20'
+);
+
+INSERT INTO hotel
+(
+kode_hotel,
+id_wilayah,
+nama_hotel,
+alamat,
+kota,
+bintang,
+kontak_hotel,
+status_operasional
+)
+VALUES
+(
+'SBY',
 2,
 'HDRS Hotel Surabaya',
 'Jl. Basuki Rahmat No.20',
 'Surabaya',
 4,
-'031222222'
+'031222222',
+'Aktif'
 );
 
--- Kamar
 INSERT INTO kamar
-(id_hotel,nomor_kamar,tipe_kamar,harga_per_malam)
+(
+kode_kamar,
+id_hotel,
+nomor_kamar,
+tipe_kamar,
+harga_per_malam,
+status
+)
 VALUES
-(1,'201','Standard',550000),
-(1,'202','Suite',1200000);
+(
+'SBY01',
+1,
+'201',
+'Standard',
+550000,
+'Available'
+);
+
+INSERT INTO kamar
+(
+kode_kamar,
+id_hotel,
+nomor_kamar,
+tipe_kamar,
+harga_per_malam,
+status
+)
+VALUES
+(
+'SBY02',
+1,
+'202',
+'Suite',
+1200000,
+'Available'
+);
 
 -- Pelanggan
 INSERT INTO pelanggan

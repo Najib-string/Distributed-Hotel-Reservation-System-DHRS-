@@ -10,65 +10,174 @@ Stored Function untuk proses reservasi kamar
 =================================================
 */
 
-CREATE OR REPLACE FUNCTION booking_kamar(
+CREATE OR REPLACE FUNCTION booking_kamar
+(
     p_id_pelanggan INT,
-    p_id_kamar INT,
-    p_tgl_checkin DATE,
-    p_tgl_checkout DATE
+    p_kode_kamar VARCHAR,
+    p_checkin DATE,
+    p_checkout DATE
 )
 RETURNS TEXT
 LANGUAGE plpgsql
 AS
 $$
 DECLARE
-    v_harga NUMERIC(12,2);
-    v_lama_inap INT;
-    v_total NUMERIC(12,2);
+
+    v_id_kamar INT;
+    v_harga NUMERIC;
+    v_total NUMERIC;
+    v_lama INT;
+    v_id_reservasi INT;
+
 BEGIN
 
-    -- Ambil harga kamar
-    SELECT harga_per_malam
-    INTO v_harga
-    FROM kamar
-    WHERE id_kamar = p_id_kamar;
+    v_lama := p_checkout - p_checkin;
 
-    -- Jika kamar tidak ditemukan
-    IF NOT FOUND THEN
-        RETURN 'Kamar tidak ditemukan';
+    --------------------------------------------------
+    -- JAKARTA
+    --------------------------------------------------
+
+    IF LEFT(p_kode_kamar,3)='JKT' THEN
+
+        SELECT
+            id_kamar,
+            harga_per_malam
+        INTO
+            v_id_kamar,
+            v_harga
+        FROM kamar
+        WHERE kode_kamar=p_kode_kamar;
+
+        IF NOT FOUND THEN
+            RETURN 'Kamar tidak ditemukan';
+        END IF;
+
+        v_total := v_harga * v_lama;
+
+        INSERT INTO reservasi
+        (
+            id_pelanggan,
+            id_kamar,
+            tgl_checkin,
+            tgl_checkout,
+            total_bayar,
+            status_reservasi
+        )
+        VALUES
+        (
+            p_id_pelanggan,
+            v_id_kamar,
+            p_checkin,
+            p_checkout,
+            v_total,
+            'Booked'
+        );
+
+        RETURN 'Booking Jakarta berhasil';
+
     END IF;
 
-    -- Hitung lama menginap
-    v_lama_inap := p_tgl_checkout - p_tgl_checkin;
+    --------------------------------------------------
+    -- SURABAYA
+    --------------------------------------------------
 
-    -- Hitung total bayar
-    v_total := v_harga * v_lama_inap;
+    IF LEFT(p_kode_kamar,3)='SBY' THEN
 
-    -- Simpan reservasi
-    INSERT INTO reservasi
-    (
-        id_pelanggan,
-        id_kamar,
-        tgl_checkin,
-        tgl_checkout,
-        total_bayar,
-        status_reservasi
-    )
-    VALUES
-    (
-        p_id_pelanggan,
-        p_id_kamar,
-        p_tgl_checkin,
-        p_tgl_checkout,
-        v_total,
-        'Booked'
-    );
+        SELECT
+            id_kamar,
+            harga_per_malam
+        INTO
+            v_id_kamar,
+            v_harga
+        FROM kamar_surabaya
+        WHERE kode_kamar=p_kode_kamar;
 
-    RETURN 'Booking berhasil';
+        IF NOT FOUND THEN
+            RETURN 'Kamar tidak ditemukan';
+        END IF;
 
-EXCEPTION
+        v_total := v_harga * v_lama;
 
-    WHEN exclusion_violation THEN
-        RETURN 'Kamar sudah dibooking pada tanggal tersebut';
+        SELECT COALESCE(MAX(id_reservasi),0)+1
+        INTO v_id_reservasi
+        FROM reservasi_surabaya;
+
+        INSERT INTO reservasi_surabaya
+        (
+            id_reservasi,
+            id_pelanggan,
+            id_kamar,
+            tgl_checkin,
+            tgl_checkout,
+            total_bayar,
+            status_reservasi
+        )
+        VALUES
+        (
+            v_id_reservasi,
+            p_id_pelanggan,
+            v_id_kamar,
+            p_checkin,
+            p_checkout,
+            v_total,
+            'Booked'
+        );
+
+        RETURN 'Booking Surabaya berhasil';
+
+    END IF;
+
+    --------------------------------------------------
+    -- MAKASSAR
+    --------------------------------------------------
+
+    IF LEFT(p_kode_kamar,3)='MKS' THEN
+
+        SELECT
+            id_kamar,
+            harga_per_malam
+        INTO
+            v_id_kamar,
+            v_harga
+        FROM kamar_makassar
+        WHERE kode_kamar=p_kode_kamar;
+
+        IF NOT FOUND THEN
+            RETURN 'Kamar tidak ditemukan';
+        END IF;
+
+        v_total := v_harga * v_lama;
+
+        SELECT COALESCE(MAX(id_reservasi),0)+1
+        INTO v_id_reservasi
+        FROM reservasi_makassar;
+
+        INSERT INTO reservasi_makassar
+        (
+            id_reservasi,
+            id_pelanggan,
+            id_kamar,
+            tgl_checkin,
+            tgl_checkout,
+            total_bayar,
+            status_reservasi
+        )
+        VALUES
+        (
+            v_id_reservasi,
+            p_id_pelanggan,
+            v_id_kamar,
+            p_checkin,
+            p_checkout,
+            v_total,
+            'Booked'
+        );
+
+        RETURN 'Booking Makassar berhasil';
+
+    END IF;
+
+    RETURN 'Kode kamar tidak valid';
 
 END;
 $$;

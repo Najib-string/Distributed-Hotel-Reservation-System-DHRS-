@@ -21,27 +21,24 @@ CREATE TABLE pelanggan (
 
 CREATE TABLE hotel (
     id_hotel SERIAL PRIMARY KEY,
-    id_wilayah INT REFERENCES wilayah(id_wilayah),
-    nama_hotel VARCHAR(100) NOT NULL,
-    alamat TEXT NOT NULL,
-    kota VARCHAR(50) NOT NULL,
-    bintang INT CHECK (bintang BETWEEN 1 AND 5),
-    kontak_hotel VARCHAR(20),
+    kode_hotel VARCHAR(10) UNIQUE NOT NULL,
+    id_wilayah INTEGER REFERENCES wilayah(id_wilayah),
+    nama_hotel VARCHAR(100),
+    alamat TEXT,
+    kota VARCHAR(50),
+    bintang INTEGER,
+    kontak_hotel VARCHAR(30),
     status_operasional VARCHAR(20)
-        CHECK (status_operasional IN ('Aktif','Maintenance'))
-        DEFAULT 'Aktif'
 );
 
 CREATE TABLE kamar (
     id_kamar SERIAL PRIMARY KEY,
-    id_hotel INT REFERENCES hotel(id_hotel) ON DELETE CASCADE,
-    nomor_kamar VARCHAR(10) NOT NULL,
-    tipe_kamar VARCHAR(20)
-        CHECK (tipe_kamar IN ('Standard','Deluxe','Suite','Family')),
-    harga_per_malam DECIMAL(12,2) NOT NULL,
+    kode_kamar VARCHAR(10) UNIQUE NOT NULL,
+    id_hotel INTEGER REFERENCES hotel(id_hotel),
+    nomor_kamar VARCHAR(10),
+    tipe_kamar VARCHAR(30),
+    harga_per_malam NUMERIC(12,2),
     status VARCHAR(20)
-        CHECK (status IN ('Available','Occupied','Maintenance'))
-        DEFAULT 'Available'
 );
 
 CREATE TABLE reservasi (

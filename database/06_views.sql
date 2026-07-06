@@ -17,31 +17,34 @@ Global Views
 CREATE OR REPLACE VIEW hotel_nasional AS
 
 SELECT
-    'Jakarta' AS cabang,
-    id_hotel,
-    nama_hotel,
-    kota,
-    bintang
+'Jakarta' AS cabang,
+kode_hotel,
+id_hotel,
+nama_hotel,
+kota,
+bintang
 FROM hotel
 
 UNION ALL
 
 SELECT
-    'Surabaya',
-    id_hotel,
-    nama_hotel,
-    kota,
-    bintang
+'Surabaya',
+kode_hotel,
+id_hotel,
+nama_hotel,
+kota,
+bintang
 FROM hotel_surabaya
 
 UNION ALL
 
 SELECT
-    'Makassar',
-    id_hotel,
-    nama_hotel,
-    kota,
-    bintang
+'Makassar',
+kode_hotel,
+id_hotel,
+nama_hotel,
+kota,
+bintang
 FROM hotel_makassar;
 
 
@@ -52,31 +55,34 @@ FROM hotel_makassar;
 CREATE OR REPLACE VIEW kamar_nasional AS
 
 SELECT
-    'Jakarta' AS cabang,
-    nomor_kamar,
-    tipe_kamar,
-    harga_per_malam,
-    status
+'Jakarta' AS cabang,
+kode_kamar,
+nomor_kamar,
+tipe_kamar,
+harga_per_malam,
+status
 FROM kamar
 
 UNION ALL
 
 SELECT
-    'Surabaya',
-    nomor_kamar,
-    tipe_kamar,
-    harga_per_malam,
-    status
+'Surabaya',
+kode_kamar,
+nomor_kamar,
+tipe_kamar,
+harga_per_malam,
+status
 FROM kamar_surabaya
 
 UNION ALL
 
 SELECT
-    'Makassar',
-    nomor_kamar,
-    tipe_kamar,
-    harga_per_malam,
-    status
+'Makassar',
+kode_kamar,
+nomor_kamar,
+tipe_kamar,
+harga_per_malam,
+status
 FROM kamar_makassar;
 
 
@@ -87,38 +93,38 @@ FROM kamar_makassar;
 CREATE OR REPLACE VIEW reservasi_nasional AS
 
 SELECT
-    'Jakarta' AS cabang,
-    id_reservasi,
-    id_pelanggan,
-    id_kamar,
-    tgl_checkin,
-    tgl_checkout,
-    total_bayar,
-    status_reservasi
+'Jakarta' AS cabang,
+id_reservasi,
+id_pelanggan,
+id_kamar,
+tgl_checkin,
+tgl_checkout,
+total_bayar,
+status_reservasi
 FROM reservasi
 
 UNION ALL
 
 SELECT
-    'Surabaya',
-    id_reservasi,
-    id_pelanggan,
-    id_kamar,
-    tgl_checkin,
-    tgl_checkout,
-    total_bayar,
-    status_reservasi
+'Surabaya',
+id_reservasi,
+id_pelanggan,
+id_kamar,
+tgl_checkin,
+tgl_checkout,
+total_bayar,
+status_reservasi
 FROM reservasi_surabaya
 
 UNION ALL
 
 SELECT
-    'Makassar',
-    id_reservasi,
-    id_pelanggan,
-    id_kamar,
-    tgl_checkin,
-    tgl_checkout,
-    total_bayar,
-    status_reservasi
+'Makassar',
+id_reservasi,
+id_pelanggan,
+id_kamar,
+tgl_checkin,
+tgl_checkout,
+total_bayar,
+status_reservasi
 FROM reservasi_makassar;

@@ -64,6 +64,7 @@ OPTIONS (
 
 CREATE FOREIGN TABLE IF NOT EXISTS hotel_surabaya (
     id_hotel INT,
+    kode_hotel VARCHAR(10),
     id_wilayah INT,
     nama_hotel VARCHAR(100),
     alamat TEXT,
@@ -84,6 +85,7 @@ OPTIONS (
 
 CREATE FOREIGN TABLE IF NOT EXISTS kamar_surabaya (
     id_kamar INT,
+    kode_kamar VARCHAR(10),
     id_hotel INT,
     nomor_kamar VARCHAR(10),
     tipe_kamar VARCHAR(20),
@@ -121,6 +123,7 @@ OPTIONS (
 
 CREATE FOREIGN TABLE IF NOT EXISTS hotel_makassar (
     id_hotel INT,
+    kode_hotel VARCHAR(10),
     id_wilayah INT,
     nama_hotel VARCHAR(100),
     alamat TEXT,
@@ -141,6 +144,7 @@ OPTIONS (
 
 CREATE FOREIGN TABLE IF NOT EXISTS kamar_makassar (
     id_kamar INT,
+    kode_kamar VARCHAR(10),
     id_hotel INT,
     nomor_kamar VARCHAR(10),
     tipe_kamar VARCHAR(20),

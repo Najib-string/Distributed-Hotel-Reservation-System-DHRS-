@@ -11,23 +11,65 @@ INSERT INTO wilayah VALUES
 
 -- Hotel
 INSERT INTO hotel
-(id_wilayah,nama_hotel,alamat,kota,bintang,kontak_hotel)
+(
+kode_hotel,
+id_wilayah,
+nama_hotel,
+alamat,
+kota,
+bintang,
+kontak_hotel,
+status_operasional
+)
 VALUES
 (
+'MKS',
 3,
 'HDRS Hotel Makassar',
 'Jl. Penghibur No.30',
 'Makassar',
 4,
-'041133333'
+'041133333',
+'Aktif'
 );
 
--- Kamar
 INSERT INTO kamar
-(id_hotel,nomor_kamar,tipe_kamar,harga_per_malam)
+(
+kode_kamar,
+id_hotel,
+nomor_kamar,
+tipe_kamar,
+harga_per_malam,
+status
+)
 VALUES
-(1,'301','Standard',600000),
-(1,'302','Family',1500000);
+(
+'MKS01',
+1,
+'301',
+'Standard',
+600000,
+'Available'
+);
+
+INSERT INTO kamar
+(
+kode_kamar,
+id_hotel,
+nomor_kamar,
+tipe_kamar,
+harga_per_malam,
+status
+)
+VALUES
+(
+'MKS02',
+1,
+'302',
+'Family',
+1500000,
+'Available'
+);
 
 -- Pelanggan
 INSERT INTO pelanggan
